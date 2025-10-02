@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AppNavbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+// Importar las páginas que crearás
+import RecipeListPage from './pages/RecipeListPage'; 
+import RecipeDetailPage from './pages/RecipeDetailPage'; 
+import FormPage from './pages/FormPage'; 
+import { Container } from 'react-bootstrap';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <AppNavbar />
+      <Container className="mt-4 min-vh-100"> 
+        <Routes>
+          {/* Ruteo Estático: Listado */}
+          <Route path="/" element={<RecipeListPage />} /> 
+          
+          {/* Ruteo Estático: Crear */}
+          <Route path="/crear" element={<FormPage />} /> 
+
+          {/* Ruteo Dinámico: Detalle */}
+          <Route path="/receta/:id" element={<RecipeDetailPage />} /> 
+
+          {/* Ruteo Dinámico: Editar */}
+          <Route path="/editar/:id" element={<FormPage />} /> 
+
+          {/* Opcional: Ruta 404 */}
+          <Route path="*" element={<h1>404: No Encontrado</h1>} />
+        </Routes>
+      </Container>
+      <Footer />
+    </Router>
+  );
 }
 
-export default App
+export default App;
